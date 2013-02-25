@@ -7,7 +7,7 @@ var startApp = function() {
 
 };
 
-$(document).on('pageshow', '#one', function()
+$(document).on('pagesinit', '#one', function()
                   {
                detailed_div = $("div#detailed");
                detailed_div.text("");
@@ -46,12 +46,6 @@ $(document).on('pageshow', '#one', function()
                                           
                                                });
                   $('div#content ul#job').listview("refresh");
-                  
-//                  $('li.listelement').click(function() {
-//                                            var jobID = $(this).data('id');
-//                                            alert(jobID);
-//                                            
-//                                });
                   
                   $('li.listelement').live("click", function(){
                                            jobID = $(this).data('id');
