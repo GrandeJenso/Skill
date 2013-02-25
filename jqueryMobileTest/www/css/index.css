@@ -42,6 +42,3 @@ h1{
     width:100%;
     padding:0;
 }
-.ui-page {
-    -webkit-backface-visibility: hidden;
-}

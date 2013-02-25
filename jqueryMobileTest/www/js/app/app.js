@@ -31,7 +31,7 @@ $(document).ready(function()
                                           
                                        
                                           
-                                          $('div#content ul#job').append('<li class="listelement" data-id= "' + id + '" ><a data-transition="slide"><img src="' + img +'"><p>' + title + '</p></a></li>');
+                                          $('div#content ul#job').append('<li class="listelement" data-id= "' + id + '" ><a><img src="' + img +'"><p>' + title + '</p></a></li>');
                                           
                                           
                                          // $('div#content ul#job').append('<li><a href="'+$(this).find('applicationMethods link').attr('href') + '"><img src="' + $(this).find('logo link').attr('href') +'"><p>' + $(this).find('title').text() + '</p></a></li>');
@@ -52,7 +52,7 @@ $(document).ready(function()
                   
                   $('li.listelement').live("click", function(){
                                            jobID = $(this).data('id');
-                                           $.mobile.changePage("#two", {transition:"slide"} , true, true);
+                                           $.mobile.changePage("#two");
                                            
                                 });
                   
