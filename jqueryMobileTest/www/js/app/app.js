@@ -2,11 +2,12 @@ var startApp = function() {
   // alert('started');
     var jobID;
     var xml_all;
+    var detailed_div;
 
 
 };
 
-$(document).ready(function()
+$(document).on('pageinit', "#one", function()
                   {
                   $.ajax({
                          type: "GET",
@@ -53,6 +54,8 @@ $(document).ready(function()
                   $('li.listelement').live("click", function(){
                                            jobID = $(this).data('id');
                                            $.mobile.changePage("#two", {transition:"slide"} , true, true);
+                                           //$.mobile.loading('show');
+                                           detailed_div.text("");
                                            
                                 });
                   
@@ -64,16 +67,17 @@ $(document).ready(function()
                   
                   });
 
-            $(document).on('pageinit', '#two', function()
+            $(document).on('pageshow', '#two', function()
                            {
-                            
+                           detailed_div =  $("div#detailed");
+                           
                            var job = $(xml_all).find("job[id="+jobID+"]")
                            var title = job.find('title').text();
-                           var detailed_div = $("div#detailed");
                            var description = job.find('description').text();
                            
                            detailed_div.append("<h3>"+title+"</h3>");
                            detailed_div.append("<p>"+description+"</p>");
+                           //$.mobile.loading('hide');
                            
                            
                            });
