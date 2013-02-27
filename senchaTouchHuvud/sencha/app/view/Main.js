@@ -12,7 +12,7 @@ Ext.define('skill_ios.view.Main', {
         xtype: 'home'
         },
         {
-        xtype: 'places'
+        xtype: 'placesContainer'
         }
            
         ]

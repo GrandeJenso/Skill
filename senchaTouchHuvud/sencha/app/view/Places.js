@@ -10,15 +10,11 @@ Ext.define('skill_ios.view.Places',{
 		
 		items:[
 		{
-			xtype:'titlebar',
-			title:'Lg',
-			docked:'top'
-			
-		},
-		{
 		xtype:'list',
 		store:'Places',
-		itemTpl:'{name} , {title}, {location}'
+		itemTpl:'<img src="{href}"></img> <h1>{title:ellipsis(35)}</h1>',
+		itemCls:'job-entry'
+		
 		}
 		]
 		
