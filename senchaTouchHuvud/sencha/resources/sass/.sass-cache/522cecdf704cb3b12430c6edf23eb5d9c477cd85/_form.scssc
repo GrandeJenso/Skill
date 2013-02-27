@@ -1,1160 +1,0 @@
-3.2.6 (Media Mark)
-6ce22c9d038621413c1c6c3d4cc2ce70fc5a4c6b
-o:Sass::Tree::RootNode
-:@template"•4@import '../global';
-@import 'form-sliders';
-
-/**
- * @var {color} $form-bg-color
- * Default background-color for forms.
- *
- * @member Ext.form.Panel
- */
-$form-bg-color: #eee !default;
-
-/**
- * @class Ext.field.Field
- */
-
-/**
- * @var {color} $form-field-bg-color
- * Default background-color for form fields.
- */
-$form-field-bg-color: #fff !default;
-
-/**
- * @var {color} $form-light
- * Light color for form fields, mostly used on field borders.
- */
-$form-light: #ddd !default;
-
-/**
- * @var {color} $form-dark
- * Dark color for form fields, mostly used on labels/text.
- */
-$form-dark: #333 !default;
-
-/**
- * @var {color} $form-label-background-color
- * The default background color for labels
- */
-$form-label-background-color: lighten($form-light, 10%);
-
-/**
- * @var {measurement} $form-field-height
- * Default height for form fields.
- */
-$form-field-height: 2.5em !default;
-
-/**
- * @var {measurement} $form-spacing
- * Default spacing for form fields, used for padding, etc.
- */
-$form-spacing: .6em !default;
-
-/**
- * @var {measurement} $form-textarea-height
- * Default height for form textareas.
- *
- * @member Ext.field.TextArea
- */
-$form-textarea-height: 6em !default;
-
-/**
- * @var {measurement} $form-thumb-size
- * Default size of "thumbs" for form sliders/toggles.
- *
- * @member Ext.field.Slider
- */
-$form-thumb-size: 2.2em !default;
-
-/**
- * @var {measurement} $form-toggle-size
- * Thumb size minus padding for inset thumbs like in a Toggle element.
- *
- * @member Ext.field.Toggle
- */
-$form-toggle-size: $form-thumb-size - .35em;
-
-/**
- * @var {measurement} $form-fieldset-radius
- * Default border-radius for form fieldsets.
- *
- * @member Ext.form.FieldSet
- */
-$form-fieldset-radius: .4em !default;
-
-/**
- * @var {measurement} $form-slider-size
- * Height of the slider "track."
- *
- * @member Ext.field.Slider
- */
-$form-slider-size: .8em !default;
-
-$form-spinner-button-width: 3em !default;
-
-// Private utility vars & mixins
-
-$form-thumb-space: ( $form-thumb-size - $form-toggle-size ) / 2;
-$form-input-fields: '.x-field-text, .x-input-text, .x-input, .x-input-number, .x-spinner-body, .x-input-radio, .x-input-checkbox, .x-input-email, .x-input-url, .x-input-password, .x-input-slider';
-$form-scrollable-fields: '.x-field-slider, .x-field-toggle';
-
-@mixin label {
-  text-shadow: #fff 0 1px 1px;
-  color: $form-dark;
-}
-
-@mixin checkmark($color: #000){
-  @extend .x-checkmark-base;
-  background-color: $color;
-}
-
-@mixin radiomark($color: #000){
-  @extend .x-radiomark-base;
-  background-color: $color;
-}
-
-@mixin selectmark($color: #000){
-  @extend .x-selectmark-base;
-  background-color: $color;
-}
-/**
- * Includes default form styles.
- *
- * @member Ext.form.Panel
- */
-@mixin sencha-form($include-sliders: $include-form-sliders) {
-
-  // Ext.form.Panel
-  .x-form {
-    .x-scroll-container {
-      background-color: $form-bg-color;
-
-      > .x-inner {
-        padding: 1em;
-      }
-    }
-  }
-
-  // Label
-  .x-form-label {
-    @include label;
-    @include bevel-text('light');
-    padding: $form-spacing;
-    display: none !important;
-    background-color: $form-label-background-color;
-
-    span {
-      font-size: .8em;
-      font-weight: bold;
-    }
-
-    .x-form-label-nowrap & {
-      @include ellipsis;
-    }
-  }
-
-  //  Ext.field.Field
-  .x-field {
-    @include display-box;
-    min-height: $form-field-height;
-    background: #fff;
-
-    .x-field-input {
-      position: relative;
-      min-width: 3.7em;
-    }
-
-    .x-field-input,
-    .x-input-el {
-      width: 100%;
-    }
-
-    &.x-field-labeled {
-      .x-form-label {
-        display: block !important;
-      }
-    }
-
-    &:last-child {
-      border-bottom: 0;
-    }
-  }
-
-  .x-label-align-left,
-  .x-label-align-right {
-    .x-component-outer {
-      @include box-flex(1);
-    }
-  }
-
-  .x-label-align-left {
-    &:first-child {
-      .x-form-label {
-        @if $include-border-radius { @include border-top-left-radius($form-fieldset-radius); }
-      }
-    }
-
-    &:last-child {
-      .x-form-label {
-        @if $include-border-radius { @include border-bottom-left-radius($form-fieldset-radius); }
-      }
-    }
-
-    .x-form-label {
-
-    }
-  }
-
-  .x-label-align-right {
-    @include box-direction(reverse);
-
-    &:first-child {
-      .x-form-label {
-        @if $include-border-radius { @include border-top-right-radius($form-fieldset-radius); }
-      }
-    }
-
-    &:last-child {
-      border-bottom: 0;
-
-      .x-form-label {
-        @if $include-border-radius { @include border-bottom-right-radius($form-fieldset-radius); }
-      }
-    }
-    .x-form-label {
-
-    }
-  }
-
-  .x-label-align-left,
-  .x-label-align-right {
-    @include box-orient(horizontal !important);
-  }
-
-  .x-label-align-top,
-  .x-label-align-bottom {
-    @include box-orient(vertical !important);
-    .x-form-label {
-
-    }
-  }
-
-  .x-label-align-top {
-    &:first-child {
-      .x-form-label {
-        @if $include-border-radius { @include border-top-radius($form-fieldset-radius); }
-      }
-    }
-
-    // Needed so that the arrow icon in selectfield's only fit to the size of the field. TOUCH-2672
-    .x-component-outer {
-      position: relative;
-    }
-  }
-
-  .x-label-align-bottom {
-    @include box-direction(reverse);
-
-    &:last-child {
-      .x-form-label {
-        @if $include-border-radius { @include border-bottom-radius($form-fieldset-radius); }
-      }
-    }
-  }
-
-  .x-input-el {
-    padding: .4em;
-    min-height: $form-field-height;
-    display: block;
-    border-width: 0;
-    background: transparent;
-    -webkit-appearance: none;
-  }
-
-  .x-field-mask {
-    @include stretch;
-  }
-
-  // Required fields
-  .x-field-required {
-    label:after,
-    .x-form-label:after {
-      content: "*";
-      display: inline;
-    }
-  }
-
-  .x-item-disabled {
-    label:after,
-    .x-form-label:after {
-      color: #666 !important;
-    }
-  }
-
-  // Ext.field.TextArea
-  .x-field-textarea {
-    textarea {
-      min-height: $form-textarea-height;
-      padding-top: .5em;
-    }
-  }
-
-  // Ext.field.Hidden
-  .x-field-hidden {
-    @extend .x-hidden-display;
-  }
-
-  // Ext.field.Checkbox
-  .x-checkmark-base {
-    @include insertion(1.4em, 1.4em, 50%, auto);
-    right: ($form-spacing + .5em);
-    -webkit-mask-size: 1.4em;
-    -webkit-mask-image: theme_image('default', "pictos/check2.png");
-    margin-top: -.7em;
-  }
-
-  // Ext.field.Radio
-  .x-radiomark-base {
-    @include insertion(1.4em, 1.4em, 50%, auto);
-    right: ($form-spacing + .5em);
-    margin-top: -0.7em;
-    -webkit-mask-size: 1.4em;
-    -webkit-mask-image: theme_image('default', "pictos/circle4.png");
-  }
-
-  .x-field-checkbox .x-input-el {
-    position: relative;
-    &:after {
-      @include checkmark($form-light);
-    }
-    &:checked:after {
-      @include checkmark($active-color);
-    }
-  }
-
-  .x-field-radio .x-input-el {
-    position: relative;
-    &:before {
-      @include radiomark(darken($form-light, 5));
-    }
-    &:after {
-      @include radiomark($form-light);
-      -webkit-mask-image: theme_image('default', "pictos/circle3.png");
-    }
-    &:checked:before {
-      background-color: $active-color;
-    }
-  }
-
-  .x-item-disabled {
-    &.x-field-radio {
-      .x-input-el:checked:before {
-        background: mix($form-light, $active-color, 60);
-      }
-
-      .x-input-el:after {
-        background: #eee;
-      }
-    }
-
-    &.x-field-checkbox {
-      .x-input-el {
-        &:checked:after {
-          background: mix($form-light, $active-color, 60);
-        }
-      }
-    }
-  }
-
-  // Ext.field.Spinner
-  .x-spinner {
-    .x-component-outer {
-      @include display-box;
-
-      > * {
-        width: auto;
-      }
-    }
-
-    .x-field-input {
-      -webkit-box-flex: 1;
-
-      .x-input-el {
-        -webkit-text-fill-color: #000;
-        width: 100%;
-        text-align: center;
-      }
-
-      //http://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-inputs-spin-box
-      input::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
-    }
-
-    &.x-item-disabled {
-      .x-input-el {
-       -webkit-text-fill-color: #B3B3B3;
-      }
-
-      .x-spinner-button {
-        @include toolbar-button(lighten($form-light, 10), matte);
-        color: #aaa !important;
-      }
-    }
-
-    .x-spinner-button {
-      margin-top: .25em;
-      margin-bottom: .25em;
-      width: 2em;
-      padding: .23em 0 .27em;
-      font-weight: bold;
-      text-align: center;
-      border: 1px solid $form-light !important;
-      @include border-radius(1em);
-      @include toolbar-button(lighten($form-light, 5), matte);
-    }
-
-    .x-spinner-button-down {
-      margin-left: .25em;
-    }
-    .x-spinner-button-up {
-      margin-right: .25em;
-    }
-
-    &.x-field-grouped-buttons {
-      .x-input-el {
-        text-align: left;
-      }
-
-      .x-spinner-button-down {
-        margin-right: .5em;
-      }
-    }
-  }
-
-  .x-android {
-    .x-spinner-button {
-      padding: .40em 0 .11em !important;
-    }
-  }
-
-  // Ext.field.Select
-  .x-select-overlay {
-    .x-list-item-label {
-      height: 2.6em;
-    }
-
-    .x-list-label {
-      @include ellipsis;
-      display: block;
-    }
-
-    .x-item-selected {
-      .x-list-label {
-        margin-right: 2.6em;
-      }
-
-      .x-list-item-inner {
-        &:before {
-          @include checkmark(rgba(0,0,0,.3));
-          margin-top: -.8em;
-        }
-
-        &:after {
-          @include checkmark($form-light);
-        }
-      }
-    }
-  }
-
-  @if $include-sliders {
-    @include sencha-form-sliders;
-  }
-
-  //remove browser styling
-  input[type="search"]::-webkit-search-cancel-button {
-    -webkit-appearance: none;
-  }
-
-  .x-field-number {
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-  }
-
-    .x-field-search {
-        .x-field-input {
-            position: relative;
-
-            &:before {
-                @include insertion(.86em, .86em, 50%, .5em);
-                -webkit-mask-image: theme_image('default', "pictos/search.png");
-                -webkit-mask-size: .86em;
-                background-color: #ccc;
-                -webkit-mask-repeat: no-repeat;
-                margin-top: -0.43em;
-      }
-      .x-form-field {
-        margin-left: $toolbar-search-left-padding - 0.67em;
-      }
-    }
-  }
-
-  //clear icon
-  $form-clear-size: 2.2em;
-
-  .x-field-input {
-    .x-clear-icon {
-      display: none;
-      background: theme_image('default', "clear_icon.png") no-repeat;
-      background-position: center center;
-      background-size: 55% 55%;
-      width: $form-clear-size;
-      height: $form-clear-size;
-      margin: .5em;
-      margin-top: -($form-clear-size/2);
-      position: absolute;
-      top: 50%;
-      right: -.5em;
-    }
-  }
-
-  .x-field-clearable {
-    .x-clear-icon {
-      display: block;
-    }
-
-    .x-field-input {
-      padding-right: $form-clear-size;
-    }
-  }
-
-  .x-android .x-input-el {
-    -webkit-text-fill-color: #000;
-  }
-
-  .x-android .x-empty .x-input-el {
-    -webkit-text-fill-color: #A9A9A9;
-  }
-
-  //disabled fields
-  .x-item-disabled .x-form-label span,
-  .x-item-disabled input,
-  .x-item-disabled .x-input-el,
-  .x-item-disabled .x-spinner-body,
-  .x-item-disabled select,
-  .x-item-disabled textarea,
-  .x-item-disabled .x-field-clear-container {
-    color: lighten($form-dark, 50%);
-    -webkit-text-fill-color: lighten($form-dark, 50%);
-    pointer-events: none;
-  }
-
-  // Ext.form.FieldSet
-  .x-form-fieldset {
-    margin: 0 0 1.5em;
-
-    .x-form-label {
-      border-top: 1px solid lighten($form-light, 20%);
-    }
-
-    .x-form-fieldset-inner {
-      border: 1px solid $form-light;
-      background: #fff;
-      padding: 0;
-      @if $include-border-radius { @include border-radius($form-fieldset-radius); }
-      overflow: hidden;
-    }
-
-    //Ext.field.Field
-    .x-field {
-      border-bottom: 1px solid $form-light;
-      background: transparent;
-
-      &:first-child {
-        @if $include-border-radius {
-          @include border-top-radius($form-fieldset-radius);
-        }
-      }
-
-      &:last-child {
-        border-bottom: 0;
-
-        @if $include-border-radius {
-          @include border-bottom-radius($form-fieldset-radius);
-        }
-      }
-    }
-  }
-
-  .x-form-fieldset-title {
-    @include label;
-    margin: 1em ( $form-spacing + .1em ) .3em;
-    color: $form-dark;
-    font-weight: bold;
-
-    .x-innerhtml {
-      @include ellipsis;
-    }
-  }
-
-  .x-form-fieldset-instructions {
-    @include label;
-    color: lighten($form-dark, 30%);
-    margin: 1em ( $form-spacing + .1em ) .3em;
-    font-size: .8em;
-    text-align: center;
-  }
-
-  // Ext.field.Select
-  .x-selectmark-base {
-    @include insertion(1em, 1em, 50%, auto);
-    right: ($form-spacing + .1em);
-    -webkit-mask-size: 1em;
-    -webkit-mask-image: theme_image('default', "pictos/arrow_down.png");
-    margin-top: -.5em;
-  }
-
-  // Create the dropdown arrow
-  // for select fields
-  .x-field-select {
-    position: relative;
-    z-index: 1;
-
-    .x-component-outer {
-      &:after {
-        @include selectmark($form-light);
-      }
-
-      &:before,
-      &:after {
-        pointer-events: none;
-        position: absolute;
-        display: block;
-      }
-
-      &:before {
-        @include insertion(4em,auto,0,auto);
-        right: 0;
-        bottom: 0;
-        @if $include-border-radius { @include border-right-radius($form-fieldset-radius); }
-        @if $include-highlights { background: -webkit-gradient(linear, 0% 0%, 100% 0%, from(rgba($form-field-bg-color, 0)), color-stop(.5, rgba($form-field-bg-color, 1))); }
-      }
-    }
-  }
-}
-:@has_childrenT:@options{ :@children[+o:Sass::Tree::ImportNode:@imported_file0:@imported_filename"../global;0;@;	[ :
-@lineio;
-;0;"form-sliders;0;@;	[ ;io:Sass::Tree::CommentNode
-:
-@type:normal:@value["o/**
- * @var {color} $form-bg-color
- * Default background-color for forms.
- *
- * @member Ext.form.Panel
- */;@;	[ ;i	o:Sass::Tree::VariableNode:@guarded"!default:
-@name"form-bg-color:
-@expro:Sass::Script::Color	:@attrs{	:rediÓ:
-alphai:
-greeniÓ:	blueiÓ;0;@;i;@;	[ ;io;
-;;;["&/**
- * @class Ext.field.Field
- */;@;	[ ;io;
-;;;["^/**
- * @var {color} $form-field-bg-color
- * Default background-color for form fields.
- */;@;	[ ;io;;"!default;"form-field-bg-color;o;	;{	;iˇ;i;iˇ;iˇ;0;@;i;@;	[ ;io;
-;;;["f/**
- * @var {color} $form-light
- * Light color for form fields, mostly used on field borders.
- */;@;	[ ;io;;"!default;"form-light;o;	;{	;i›;i;i›;i›;0;@;i;@;	[ ;io;
-;;;["b/**
- * @var {color} $form-dark
- * Dark color for form fields, mostly used on labels/text.
- */;@;	[ ;i!o;;"!default;"form-dark;o;	;{	;i8;i;i8;i8;0;@;i%;@;	[ ;i%o;
-;;;["d/**
- * @var {color} $form-label-background-color
- * The default background color for labels
- */;@;	[ ;i'o;;0;" form-label-background-color;o:Sass::Script::Funcall;"lighten:@keywords{ ;@:@splat0;i+:
-@args[o:Sass::Script::Variable	;"form-light:@underscored_name"form_light;@;i+o:Sass::Script::Number:@numerator_units["%:@original"10%;i;@:@denominator_units[ ;i+;@;	[ ;i+o;
-;;;["X/**
- * @var {measurement} $form-field-height
- * Default height for form fields.
- */;@;	[ ;i-o;;"!default;"form-field-height;o;";#["em;$"
-2.5em;f2.5;@;%[ ;i1;@;	[ ;i1o;
-;;;["k/**
- * @var {measurement} $form-spacing
- * Default spacing for form fields, used for padding, etc.
- */;@;	[ ;i3o;;"!default;"form-spacing;o;";#["em;$"
-0.6em;f0.59999999999999998 33;@;%[ ;i7;@;	[ ;i7o;
-;;;["/**
- * @var {measurement} $form-textarea-height
- * Default height for form textareas.
- *
- * @member Ext.field.TextArea
- */;@;	[ ;i9o;;"!default;"form-textarea-height;o;";#["em;$"6em;i;@;%[ ;i?;@;	[ ;i?o;
-;;;["É/**
- * @var {measurement} $form-thumb-size
- * Default size of "thumbs" for form sliders/toggles.
- *
- * @member Ext.field.Slider
- */;@;	[ ;iAo;;"!default;"form-thumb-size;o;";#["em;$"
-2.2em;f2.2000000000000002 ôö;@;%[ ;iG;@;	[ ;iGo;
-;;;["ï/**
- * @var {measurement} $form-toggle-size
- * Thumb size minus padding for inset thumbs like in a Toggle element.
- *
- * @member Ext.field.Toggle
- */;@;	[ ;iIo;;0;"form-toggle-size;o:Sass::Script::Operation
-:@operand2o;";#["em;$"0.35em;f0.34999999999999998 ff;@;%[ ;iO:@operand1o; 	;"form-thumb-size;!"form_thumb_size;@;iO;@:@operator:
-minus;iO;@;	[ ;iOo;
-;;;["Ä/**
- * @var {measurement} $form-fieldset-radius
- * Default border-radius for form fieldsets.
- *
- * @member Ext.form.FieldSet
- */;@;	[ ;iQo;;"!default;"form-fieldset-radius;o;";#["em;$"
-0.4em;f0.40000000000000002 ôö;@;%[ ;iW;@;	[ ;iWo;
-;;;["t/**
- * @var {measurement} $form-slider-size
- * Height of the slider "track."
- *
- * @member Ext.field.Slider
- */;@;	[ ;iYo;;"!default;"form-slider-size;o;";#["em;$"
-0.8em;f0.80000000000000004 ôö;@;%[ ;i_;@;	[ ;i_o;;"!default;"form-spinner-button-width;o;";#["em;$"3em;i;@;%[ ;ia;@;	[ ;iao;
-;:silent;["(/* Private utility vars & mixins */;@;	[ ;ico;;0;"form-thumb-space;o;&
-;'o;";#[ ;$"2;i;@;%[ ;ie;(o;&
-;'o; 	;"form-toggle-size;!"form_toggle_size;@;ie;(o; 	;"form-thumb-size;!"form_thumb_size;@;ie;@;);*;ie;@;):div;ie;@;	[ ;ieo;;0;"form-input-fields;o:Sass::Script::String	;:string;"≠.x-field-text, .x-input-text, .x-input, .x-input-number, .x-spinner-body, .x-input-radio, .x-input-checkbox, .x-input-email, .x-input-url, .x-input-password, .x-input-slider;@;if;@;	[ ;ifo;;0;"form-scrollable-fields;o;-	;;.;"%.x-field-slider, .x-field-toggle;@;ig;@;	[ ;igo:Sass::Tree::MixinDefNode;"
-label;T;@;	[o:Sass::Tree::PropNode;["text-shadow;o:Sass::Script::List	:@separator:
-space;[	o;	;{	;iˇ;i;iˇ;iˇ;0;@;ijo;";#[ ;$"0;i ;@;%@¿;ijo;";#["px;$"1px;i;@;%[ ;ijo;";#["px;$"1px;i;@;%[ ;ij;@;ij:@prop_syntax:new;@:
-@tabsi ;	[ ;ijo;0;["
-color;o; 	;"form-dark;!"form_dark;@;ik;4;5;@;6i ;	[ ;ik;0;ii;[ o;/;"checkmark;T;@;	[o:Sass::Tree::ExtendNode
-:@selector["."x-checkmark-base:@optionalF;@;	[ ;ioo;0;["background-color;o; 	;"
-color;!"
-color;@;ip;4;5;@;6i ;	[ ;ip;0;in;[[o; ;"
-color;!"
-color;@o;	;{	;i ;i;i ;i ;0;@;ino;/;"radiomark;T;@;	[o;7
-;8["."x-radiomark-base;9F;@;	[ ;ito;0;["background-color;o; 	;"
-color;!"
-color;@;iu;4;5;@;6i ;	[ ;iu;0;is;[[o; ;"
-color;!"
-color;@o;	;{	;i ;i;i ;i ;0;@;iso;/;"selectmark;T;@;	[o;7
-;8["."x-selectmark-base;9F;@;	[ ;iyo;0;["background-color;o; 	;"
-color;!"
-color;@;iz;4;5;@;6i ;	[ ;iz;0;ix;[[o; ;"
-color;!"
-color;@o;	;{	;i ;i;i ;i ;0;@;ixo;
-;;;["J/**
- * Includes default form styles.
- *
- * @member Ext.form.Panel
- */;@;	[ ;i|o;/;"sencha-form;T;@;	[<o;
-;;+;["/* Ext.form.Panel */;@;	[ ;i~o:Sass::Tree::RuleNode:
-@rule[".x-form:@parsed_ruleso:"Sass::Selector::CommaSequence:@filename" ;i:@members[o:Sass::Selector::Sequence;?[o:#Sass::Selector::SimpleSequence
-:@sourceso:Set:
-@hash{ :@subject0;>@D;i;?[o:Sass::Selector::Class;["x-form;>@D;i;T;@;6i ;	[o;:;;[".x-scroll-container;<o;=;>" ;iÄ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@T;iÄ;?[o;F;["x-scroll-container;>@T;iÄ;T;@;6i ;	[o;0;["background-color;o; 	;"form-bg-color;!"form_bg_color;@;iÅ;4;5;@;6i ;	[ ;iÅo;:;;["> .x-inner;<o;=;>" ;iÉ;?[o;@;?[">o;A
-;Bo;C;D{ ;E0;>@k;iÉ;?[o;F;["x-inner;>@k;iÉ;T;@;6i ;	[o;0;["padding;o;-;:identifier;"1em;@;4;5;@;6i ;	[ ;iÑ;iÉ;iÄ;io;
-;;+;["/* Label */;@;	[ ;iâo;:;;[".x-form-label;<o;=;>" ;iä;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@Ü;iä;?[o;F;["x-form-label;>@Ü;iä;T;@;6i ;	[o:Sass::Tree::MixinNode;"
-label;{ ;@;	[ ;0;iã;[ o;H;"bevel-text;{ ;@;	[ ;0;iå;[o;-	;;.;"
-light;@;iåo;0;["padding;o; 	;"form-spacing;!"form_spacing;@;iç;4;5;@;6i ;	[ ;iço;0;["display;o;1	;2;3;[o;-	;;G;"	none;@;iéo;-	;;G;"!important;@;ié;@;ié;4;5;@;6i ;	[ ;iéo;0;["background-color;o; 	;" form-label-background-color;!" form_label_background_color;@;iè;4;5;@;6i ;	[ ;ièo;:;;["	span;<o;=;>" ;ië;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@∫;ië;?[o:Sass::Selector::Element	;["	span;>@∫:@namespace0;ië;T;@;6i ;	[o;0;["font-size;o;-;;G;"	.8em;@;4;5;@;6i ;	[ ;iío;0;["font-weight;o;-;;G;"	bold;@;4;5;@;6i ;	[ ;iì;iëo;:;;[".x-form-label-nowrap &;<o;=;>" ;iñ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@÷;iñ;?[o;F;["x-form-label-nowrap;>@÷;iño;A
-;Bo;C;D{ ;E0;>@÷;iñ;?[o:Sass::Selector::Parent;>@÷;iñ;T;@;6i ;	[o;H;"ellipsis;{ ;@;	[ ;0;ió;[ ;iñ;iäo;
-;;+;["/*  Ext.field.Field */;@;	[ ;iõo;:;;[".x-field;<o;=;>" ;iú;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@Ù;iú;?[o;F;["x-field;>@Ù;iú;T;@;6i ;	[o;H;"display-box;{ ;@;	[ ;0;iù;[ o;0;["min-height;o; 	;"form-field-height;!"form_field_height;@;iû;4;5;@;6i ;	[ ;iûo;0;["background;o;-;;G;"	#fff;@;4;5;@;6i ;	[ ;iüo;:;;[".x-field-input;<o;=;>" ;i°;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@;i°;?[o;F;["x-field-input;>@;i°;T;@;6i ;	[o;0;["position;o;-;;G;"relative;@;4;5;@;6i ;	[ ;i¢o;0;["min-width;o;-;;G;"
-3.7em;@;4;5;@;6i ;	[ ;i£;i°o;:;;["$.x-field-input,
-    .x-input-el;<o;=;>" ;iß;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@2;iß;?[o;F;["x-field-input;>@2;ißo;@;?["
-o;A
-;Bo;C;D{ ;E0;>@2;iß;?[o;F;["x-input-el;>@2;iß;T;@;6i ;	[o;0;["
-width;o;-;;G;"	100%;@;4;5;@;6i ;	[ ;i®;ißo;:;;["&.x-field-labeled;<o;=;>" ;i´;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@R;i´;?[o;K;>@R;i´o;F;["x-field-labeled;>@R;i´;T;@;6i ;	[o;:;;[".x-form-label;<o;=;>" ;i¨;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@c;i¨;?[o;F;["x-form-label;>@c;i¨;T;@;6i ;	[o;0;["display;o;1	;2;3;[o;-	;;G;"
-block;@;i≠o;-	;;G;"!important;@;i≠;@;i≠;4;5;@;6i ;	[ ;i≠;i¨;i´o;:;;["&:last-child;<o;=;>" ;i±;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@};i±;?[o;K;>@};i±o:Sass::Selector::Pseudo
-;["last-child;:
-class;>@}:	@arg0;i±;T;@;6i ;	[o;0;["border-bottom;o;-;;G;"0;@;4;5;@;6i ;	[ ;i≤;i±;iúo;:;;["0.x-label-align-left,
-  .x-label-align-right;<o;=;>" ;i∑;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@î;i∑;?[o;F;["x-label-align-left;>@î;i∑o;@;?["
-o;A
-;Bo;C;D{ ;E0;>@î;i∑;?[o;F;["x-label-align-right;>@î;i∑;T;@;6i ;	[o;:;;[".x-component-outer;<o;=;>" ;i∏;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@Æ;i∏;?[o;F;["x-component-outer;>@Æ;i∏;T;@;6i ;	[o;H;"box-flex;{ ;@;	[ ;0;iπ;[o;";#[ ;$"1;i;@;%@¿;iπ;i∏;i∑o;:;;[".x-label-align-left;<o;=;>" ;iΩ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@∆;iΩ;?[o;F;["x-label-align-left;>@∆;iΩ;T;@;6i ;	[o;:;;["&:first-child;<o;=;>" ;iæ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@÷;iæ;?[o;K;>@÷;iæo;L
-;["first-child;;M;>@÷;N0;iæ;T;@;6i ;	[o;:;;[".x-form-label;<o;=;>" ;iø;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@Á;iø;?[o;F;["x-form-label;>@Á;iø;T;@;6i ;	[u:Sass::Tree::IfNode$[o:Sass::Script::Variable	:
-@name"include-border-radius:@underscored_name"include_border_radius:@options{ :
-@linei¿0[o:Sass::Tree::MixinNode;"border-top-left-radius:@keywords{ ;@	:@children[ :@splat0;	i¿:
-@args[o; 	;"form-fieldset-radius;"form_fieldset_radius;@	;	i¿;iø;iæo;:;;["&:last-child;<o;=;>" ;iƒ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@¯;iƒ;?[o;K;>@¯;iƒo;L
-;["last-child;;M;>@¯;N0;iƒ;T;@;6i ;	[o;:;;[".x-form-label;<o;=;>" ;i≈;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@	;i≈;?[o;F;["x-form-label;>@	;i≈;T;@;6i ;	[u;O'[o:Sass::Script::Variable	:
-@name"include-border-radius:@underscored_name"include_border_radius:@options{ :
-@linei∆0[o:Sass::Tree::MixinNode;"border-bottom-left-radius:@keywords{ ;@	:@children[ :@splat0;	i∆:
-@args[o; 	;"form-fieldset-radius;"form_fieldset_radius;@	;	i∆;i≈;iƒo;:;;[".x-form-label;<o;=;>" ;i ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@;i ;?[o;F;["x-form-label;>@;i ;T;@;6i ;	[ ;i ;iΩo;:;;[".x-label-align-right;<o;=;>" ;iœ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@*;iœ;?[o;F;["x-label-align-right;>@*;iœ;T;@;6i ;	[	o;H;"box-direction;{ ;@;	[ ;0;i–;[o;-	;;G;"reverse;@;i–o;:;;["&:first-child;<o;=;>" ;i“;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@A;i“;?[o;K;>@A;i“o;L
-;["first-child;;M;>@A;N0;i“;T;@;6i ;	[o;:;;[".x-form-label;<o;=;>" ;i”;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@R;i”;?[o;F;["x-form-label;>@R;i”;T;@;6i ;	[u;O%[o:Sass::Script::Variable	:
-@name"include-border-radius:@underscored_name"include_border_radius:@options{ :
-@linei‘0[o:Sass::Tree::MixinNode;"border-top-right-radius:@keywords{ ;@	:@children[ :@splat0;	i‘:
-@args[o; 	;"form-fieldset-radius;"form_fieldset_radius;@	;	i‘;i”;i“o;:;;["&:last-child;<o;=;>" ;iÿ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@c;iÿ;?[o;K;>@c;iÿo;L
-;["last-child;;M;>@c;N0;iÿ;T;@;6i ;	[o;0;["border-bottom;o;-;;G;"0;@;4;5;@;6i ;	[ ;iŸo;:;;[".x-form-label;<o;=;>" ;i€;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@z;i€;?[o;F;["x-form-label;>@z;i€;T;@;6i ;	[u;O([o:Sass::Script::Variable	:
-@name"include-border-radius:@underscored_name"include_border_radius:@options{ :
-@linei‹0[o:Sass::Tree::MixinNode;"border-bottom-right-radius:@keywords{ ;@	:@children[ :@splat0;	i‹:
-@args[o; 	;"form-fieldset-radius;"form_fieldset_radius;@	;	i‹;i€;iÿo;:;;[".x-form-label;<o;=;>" ;iﬂ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@ã;iﬂ;?[o;F;["x-form-label;>@ã;iﬂ;T;@;6i ;	[ ;iﬂ;iœo;:;;["0.x-label-align-left,
-  .x-label-align-right;<o;=;>" ;iÂ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@õ;iÂ;?[o;F;["x-label-align-left;>@õ;iÂo;@;?["
-o;A
-;Bo;C;D{ ;E0;>@õ;iÂ;?[o;F;["x-label-align-right;>@õ;iÂ;T;@;6i ;	[o;H;"box-orient;{ ;@;	[ ;0;iÊ;[o;1	;2;3;[o;-	;;G;"horizontal;@;iÊo;-	;;G;"!important;@;iÊ;@;iÊ;iÂo;:;;["0.x-label-align-top,
-  .x-label-align-bottom;<o;=;>" ;iÍ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@¿;iÍ;?[o;F;["x-label-align-top;>@¿;iÍo;@;?["
-o;A
-;Bo;C;D{ ;E0;>@¿;iÍ;?[o;F;["x-label-align-bottom;>@¿;iÍ;T;@;6i ;	[o;H;"box-orient;{ ;@;	[ ;0;iÎ;[o;1	;2;3;[o;-	;;G;"vertical;@;iÎo;-	;;G;"!important;@;iÎ;@;iÎo;:;;[".x-form-label;<o;=;>" ;iÏ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@Â;iÏ;?[o;F;["x-form-label;>@Â;iÏ;T;@;6i ;	[ ;iÏ;iÍo;:;;[".x-label-align-top;<o;=;>" ;iÒ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@ı;iÒ;?[o;F;["x-label-align-top;>@ı;iÒ;T;@;6i ;	[o;:;;["&:first-child;<o;=;>" ;iÚ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@;iÚ;?[o;K;>@;iÚo;L
-;["first-child;;M;>@;N0;iÚ;T;@;6i ;	[o;:;;[".x-form-label;<o;=;>" ;iÛ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@;iÛ;?[o;F;["x-form-label;>@;iÛ;T;@;6i ;	[u;O[o:Sass::Script::Variable	:
-@name"include-border-radius:@underscored_name"include_border_radius:@options{ :
-@lineiÙ0[o:Sass::Tree::MixinNode;"border-top-radius:@keywords{ ;@	:@children[ :@splat0;	iÙ:
-@args[o; 	;"form-fieldset-radius;"form_fieldset_radius;@	;	iÙ;iÛ;iÚo;
-;;+;["g/* Needed so that the arrow icon in selectfield's only fit to the size of the field. TOUCH-2672 */;@;	[ ;i¯o;:;;[".x-component-outer;<o;=;>" ;i˘;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@+;i˘;?[o;F;["x-component-outer;>@+;i˘;T;@;6i ;	[o;0;["position;o;-;;G;"relative;@;4;5;@;6i ;	[ ;i˙;i˘;iÒo;:;;[".x-label-align-bottom;<o;=;>" ;i˛;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@A;i˛;?[o;F;["x-label-align-bottom;>@A;i˛;T;@;6i ;	[o;H;"box-direction;{ ;@;	[ ;0;iˇ;[o;-	;;G;"reverse;@;iˇo;:;;["&:last-child;<o;=;>" ;i;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@X;i;?[o;K;>@X;io;L
-;["last-child;;M;>@X;N0;i;T;@;6i ;	[o;:;;[".x-form-label;<o;=;>" ;i;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@i;i;?[o;F;["x-form-label;>@i;i;T;@;6i ;	[u;O%[o:Sass::Script::Variable	:
-@name"include-border-radius:@underscored_name"include_border_radius:@options{ :
-@linei0[o:Sass::Tree::MixinNode;"border-bottom-radius:@keywords{ ;@	:@children[ :@splat0;	i:
-@args[o; 	;"form-fieldset-radius;"form_fieldset_radius;@	;	i;i;i;i˛o;:;;[".x-input-el;<o;=;>" ;i;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@z;i;?[o;F;["x-input-el;>@z;i;T;@;6i ;	[o;0;["padding;o;-;;G;"	.4em;@;4;5;@;6i ;	[ ;i	o;0;["min-height;o; 	;"form-field-height;!"form_field_height;@;i
-;4;5;@;6i ;	[ ;i
-o;0;["display;o;-;;G;"
-block;@;4;5;@;6i ;	[ ;io;0;["border-width;o;-;;G;"0;@;4;5;@;6i ;	[ ;io;0;["background;o;-;;G;"transparent;@;4;5;@;6i ;	[ ;io;0;["-webkit-appearance;o;-;;G;"	none;@;4;5;@;6i ;	[ ;i;io;:;;[".x-field-mask;<o;=;>" ;i;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@Ø;i;?[o;F;["x-field-mask;>@Ø;i;T;@;6i ;	[o;H;"stretch;{ ;@;	[ ;0;i;[ ;io;
-;;+;["/* Required fields */;@;	[ ;io;:;;[".x-field-required;<o;=;>" ;i;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@»;i;?[o;F;["x-field-required;>@»;i;T;@;6i ;	[o;:;;[")label:after,
-    .x-form-label:after;<o;=;>" ;i;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@ÿ;i;?[o;I	;["
-label;>@ÿ;J0;io;L
-;["
-after;;M;>@ÿ;N0;io;@;?["
-o;A
-;Bo;C;D{ ;E0;>@ÿ;i;?[o;F;["x-form-label;>@ÿ;io;L
-;["
-after;;M;>@ÿ;N0;i;T;@;6i ;	[o;0;["content;o;-;;G;""*";@;4;5;@;6i ;	[ ;io;0;["display;o;-;;G;"inline;@;4;5;@;6i ;	[ ;i;i;io;:;;[".x-item-disabled;<o;=;>" ;i;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@;i;?[o;F;["x-item-disabled;>@;i;T;@;6i ;	[o;:;;[")label:after,
-    .x-form-label:after;<o;=;>" ;i ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@;i ;?[o;I	;["
-label;>@;J0;i o;L
-;["
-after;;M;>@;N0;i o;@;?["
-o;A
-;Bo;C;D{ ;E0;>@;i ;?[o;F;["x-form-label;>@;i o;L
-;["
-after;;M;>@;N0;i ;T;@;6i ;	[o;0;["
-color;o;1	;2;3;[o;	;{	;ik;i;ik;ik;0;@;i!o;-	;;G;"!important;@;i!;@;i!;4;5;@;6i ;	[ ;i!;i ;io;
-;;+;["/* Ext.field.TextArea */;@;	[ ;i%o;:;;[".x-field-textarea;<o;=;>" ;i&;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@B;i&;?[o;F;["x-field-textarea;>@B;i&;T;@;6i ;	[o;:;;["textarea;<o;=;>" ;i';?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@R;i';?[o;I	;["textarea;>@R;J0;i';T;@;6i ;	[o;0;["min-height;o; 	;"form-textarea-height;!"form_textarea_height;@;i(;4;5;@;6i ;	[ ;i(o;0;["padding-top;o;-;;G;"	.5em;@;4;5;@;6i ;	[ ;i);i';i&o;
-;;+;["/* Ext.field.Hidden */;@;	[ ;i-o;:;;[".x-field-hidden;<o;=;>" ;i.;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@s;i.;?[o;F;["x-field-hidden;>@s;i.;T;@;6i ;	[o;7
-;8["."x-hidden-display;9F;@;	[ ;i/;i.o;
-;;+;["/* Ext.field.Checkbox */;@;	[ ;i2o;:;;[".x-checkmark-base;<o;=;>" ;i3;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@å;i3;?[o;F;["x-checkmark-base;>@å;i3;T;@;6i ;	[
-o;H;"insertion;{ ;@;	[ ;0;i4;[	o;";#["em;$"
-1.4em;f1.3999999999999999 ff;@;%[ ;i4o;";#["em;$"
-1.4em;f1.3999999999999999 ff;@;%[ ;i4o;";#["%;$"50%;i7;@;%[ ;i4o;-	;;G;"	auto;@;i4o;0;["
-right;o;&
-;'o;";#["em;$"
-0.5em;f0.5;@;%[ ;i5;(o; 	;"form-spacing;!"form_spacing;@;i5;@;):	plus;i5;4;5;@;6i ;	[ ;i5o;0;["-webkit-mask-size;o;-;;G;"
-1.4em;@;4;5;@;6i ;	[ ;i6o;0;["-webkit-mask-image;o;;"theme_image;{ ;@;0;i7;[o;-	;;.;"default;@;i7o;-	;;.;"pictos/check2.png;@;i7;4;5;@;6i ;	[ ;i7o;0;["margin-top;o;-;;G;"
--.7em;@;4;5;@;6i ;	[ ;i8;i3o;
-;;+;["/* Ext.field.Radio */;@;	[ ;i;o;:;;[".x-radiomark-base;<o;=;>" ;i<;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@ﬁ;i<;?[o;F;["x-radiomark-base;>@ﬁ;i<;T;@;6i ;	[
-o;H;"insertion;{ ;@;	[ ;0;i=;[	o;";#["em;$"
-1.4em;f1.3999999999999999 ff;@;%[ ;i=o;";#["em;$"
-1.4em;f1.3999999999999999 ff;@;%[ ;i=o;";#["%;$"50%;i7;@;%[ ;i=o;-	;;G;"	auto;@;i=o;0;["
-right;o;&
-;'o;";#["em;$"
-0.5em;f0.5;@;%[ ;i>;(o; 	;"form-spacing;!"form_spacing;@;i>;@;);P;i>;4;5;@;6i ;	[ ;i>o;0;["margin-top;o;-;;G;"-0.7em;@;4;5;@;6i ;	[ ;i?o;0;["-webkit-mask-size;o;-;;G;"
-1.4em;@;4;5;@;6i ;	[ ;i@o;0;["-webkit-mask-image;o;;"theme_image;{ ;@;0;iA;[o;-	;;.;"default;@;iAo;-	;;.;"pictos/circle4.png;@;iA;4;5;@;6i ;	[ ;iA;i<o;:;;["".x-field-checkbox .x-input-el;<o;=;>" ;iD;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@,;iD;?[o;F;["x-field-checkbox;>@,;iDo;A
-;Bo;C;D{ ;E0;>@,;iD;?[o;F;["x-input-el;>@,;iD;T;@;6i ;	[o;0;["position;o;-;;G;"relative;@;4;5;@;6i ;	[ ;iEo;:;;["&:after;<o;=;>" ;iF;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@I;iF;?[o;K;>@I;iFo;L
-;["
-after;;M;>@I;N0;iF;T;@;6i ;	[o;H;"checkmark;{ ;@;	[ ;0;iG;[o; 	;"form-light;!"form_light;@;iG;iFo;:;;["&:checked:after;<o;=;>" ;iI;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@b;iI;?[o;K;>@b;iIo;L
-;["checked;;M;>@b;N0;iIo;L
-;["
-after;;M;>@b;N0;iI;T;@;6i ;	[o;H;"checkmark;{ ;@;	[ ;0;iJ;[o; 	;"active-color;!"active_color;@;iJ;iI;iDo;:;;[".x-field-radio .x-input-el;<o;=;>" ;iN;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@~;iN;?[o;F;["x-field-radio;>@~;iNo;A
-;Bo;C;D{ ;E0;>@~;iN;?[o;F;["x-input-el;>@~;iN;T;@;6i ;	[	o;0;["position;o;-;;G;"relative;@;4;5;@;6i ;	[ ;iOo;:;;["&:before;<o;=;>" ;iP;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@õ;iP;?[o;K;>@õ;iPo;L
-;["before;;M;>@õ;N0;iP;T;@;6i ;	[o;H;"radiomark;{ ;@;	[ ;0;iQ;[o;;"darken;{ ;@;0;iQ;[o; 	;"form-light;!"form_light;@;iQo;";#[ ;$"5;i
-;@;%@¿;iQ;iPo;:;;["&:after;<o;=;>" ;iS;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@ª;iS;?[o;K;>@ª;iSo;L
-;["
-after;;M;>@ª;N0;iS;T;@;6i ;	[o;H;"radiomark;{ ;@;	[ ;0;iT;[o; 	;"form-light;!"form_light;@;iTo;0;["-webkit-mask-image;o;;"theme_image;{ ;@;0;iU;[o;-	;;.;"default;@;iUo;-	;;.;"pictos/circle3.png;@;iU;4;5;@;6i ;	[ ;iU;iSo;:;;["&:checked:before;<o;=;>" ;iW;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@‡;iW;?[o;K;>@‡;iWo;L
-;["checked;;M;>@‡;N0;iWo;L
-;["before;;M;>@‡;N0;iW;T;@;6i ;	[o;0;["background-color;o; 	;"active-color;!"active_color;@;iX;4;5;@;6i ;	[ ;iX;iW;iNo;:;;[".x-item-disabled;<o;=;>" ;i\;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@˚;i\;?[o;F;["x-item-disabled;>@˚;i\;T;@;6i ;	[o;:;;["&.x-field-radio;<o;=;>" ;i];?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@;i];?[o;K;>@;i]o;F;["x-field-radio;>@;i];T;@;6i ;	[o;:;;[".x-input-el:checked:before;<o;=;>" ;i^;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@;i^;?[o;F;["x-input-el;>@;i^o;L
-;["checked;;M;>@;N0;i^o;L
-;["before;;M;>@;N0;i^;T;@;6i ;	[o;0;["background;o;;"mix;{ ;@;0;i_;[o; 	;"form-light;!"form_light;@;i_o; 	;"active-color;!"active_color;@;i_o;";#[ ;$"60;iA;@;%@¿;i_;4;5;@;6i ;	[ ;i_;i^o;:;;[".x-input-el:after;<o;=;>" ;ib;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@C;ib;?[o;F;["x-input-el;>@C;ibo;L
-;["
-after;;M;>@C;N0;ib;T;@;6i ;	[o;0;["background;o;-;;G;"	#eee;@;4;5;@;6i ;	[ ;ic;ib;i]o;:;;["&.x-field-checkbox;<o;=;>" ;ig;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@\;ig;?[o;K;>@\;igo;F;["x-field-checkbox;>@\;ig;T;@;6i ;	[o;:;;[".x-input-el;<o;=;>" ;ih;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@m;ih;?[o;F;["x-input-el;>@m;ih;T;@;6i ;	[o;:;;["&:checked:after;<o;=;>" ;ii;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@};ii;?[o;K;>@};iio;L
-;["checked;;M;>@};N0;iio;L
-;["
-after;;M;>@};N0;ii;T;@;6i ;	[o;0;["background;o;;"mix;{ ;@;0;ij;[o; 	;"form-light;!"form_light;@;ijo; 	;"active-color;!"active_color;@;ijo;";#[ ;$"60;iA;@;%@¿;ij;4;5;@;6i ;	[ ;ij;ii;ih;ig;i\o;
-;;+;["/* Ext.field.Spinner */;@;	[ ;ipo;:;;[".x-spinner;<o;=;>" ;iq;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@¶;iq;?[o;F;["x-spinner;>@¶;iq;T;@;6i ;	[o;:;;[".x-component-outer;<o;=;>" ;ir;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@∂;ir;?[o;F;["x-component-outer;>@∂;ir;T;@;6i ;	[o;H;"display-box;{ ;@;	[ ;0;is;[ o;:;;["> *;<o;=;>" ;iu;?[o;@;?[">o;A
-;Bo;C;D{ ;E0;>@À;iu;?[o:Sass::Selector::Universal;>@À;J0;iu;T;@;6i ;	[o;0;["
-width;o;-;;G;"	auto;@;4;5;@;6i ;	[ ;iv;iu;iro;:;;[".x-field-input;<o;=;>" ;iz;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@‡;iz;?[o;F;["x-field-input;>@‡;iz;T;@;6i ;	[	o;0;["-webkit-box-flex;o;-;;G;"1;@;4;5;@;6i ;	[ ;i{o;:;;[".x-input-el;<o;=;>" ;i};?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@ˆ;i};?[o;F;["x-input-el;>@ˆ;i};T;@;6i ;	[o;0;["-webkit-text-fill-color;o;-;;G;"	#000;@;4;5;@;6i ;	[ ;i~o;0;["
-width;o;-;;G;"	100%;@;4;5;@;6i ;	[ ;io;0;["text-align;o;-;;G;"center;@;4;5;@;6i ;	[ ;iÄ;i}o;
-;;+;["`/*http://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-inputs-spin-box */;@;	[ ;iÉo;:;;["Minput::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button;<o;=;>" ;iÖ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@;iÖ;?[o;I	;["
-input;>@;J0;iÖo;L
-;["-webkit-outer-spin-button;:element;>@;N0;iÖo;@;?["
-o;A
-;Bo;C;D{ ;E0;>@;iÖ;?[o;I	;["
-input;>@;J0;iÖo;L
-;["-webkit-inner-spin-button;;R;>@;N0;iÖ;T;@;6i ;	[o;0;["-webkit-appearance;o;-;;G;"	none;@;4;5;@;6i ;	[ ;iÜo;0;["margin;o;-;;G;"0;@;4;5;@;6i ;	[ ;iá;iÖ;izo;:;;["&.x-item-disabled;<o;=;>" ;iã;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@H;iã;?[o;K;>@H;ião;F;["x-item-disabled;>@H;iã;T;@;6i ;	[o;:;;[".x-input-el;<o;=;>" ;iå;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@Y;iå;?[o;F;["x-input-el;>@Y;iå;T;@;6i ;	[o;0;["-webkit-text-fill-color;o;-;;G;"#B3B3B3;@;4;5;@;6i ;	[ ;iç;iåo;:;;[".x-spinner-button;<o;=;>" ;iê;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@o;iê;?[o;F;["x-spinner-button;>@o;iê;T;@;6i ;	[o;H;"toolbar-button;{ ;@;	[ ;0;ië;[o;;"lighten;{ ;@;0;ië;[o; 	;"form-light;!"form_light;@;iëo;";#[ ;$"10;i;@;%@¿;iëo;-	;;G;"
-matte;@;iëo;0;["
-color;o;1	;2;3;[o;	;{	;i™;i;i™;i™;0;@;iío;-	;;G;"!important;@;ií;@;ií;4;5;@;6i ;	[ ;ií;iê;ião;:;;[".x-spinner-button;<o;=;>" ;iñ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@ö;iñ;?[o;F;["x-spinner-button;>@ö;iñ;T;@;6i ;	[o;0;["margin-top;o;-;;G;"
-.25em;@;4;5;@;6i ;	[ ;ióo;0;["margin-bottom;o;-;;G;"
-.25em;@;4;5;@;6i ;	[ ;iòo;0;["
-width;o;-;;G;"2em;@;4;5;@;6i ;	[ ;iôo;0;["padding;o;1	;2;3;[o;";#["em;$"0.23em;f0.23000000000000001 =q;@;%[ ;iöo;";#[ ;$"0;i ;@;%@¿;iöo;";#["em;$"0.27em;f0.27000000000000002 ·H;@;%[ ;iö;@;iö;4;5;@;6i ;	[ ;iöo;0;["font-weight;o;-;;G;"	bold;@;4;5;@;6i ;	[ ;iõo;0;["text-align;o;-;;G;"center;@;4;5;@;6i ;	[ ;iúo;0;["border;o;1	;2;3;[	o;";#["px;$"1px;i;@;%[ ;iùo;-	;;G;"
-solid;@;iùo; 	;"form-light;!"form_light;@;iùo;-	;;G;"!important;@;iù;@;iù;4;5;@;6i ;	[ ;iùo;H;"border-radius;{ ;@;	[ ;0;iû;[o;";#["em;$"1em;i;@;%[ ;iûo;H;"toolbar-button;{ ;@;	[ ;0;iü;[o;;"lighten;{ ;@;0;iü;[o; 	;"form-light;!"form_light;@;iüo;";#[ ;$"5;i
-;@;%@¿;iüo;-	;;G;"
-matte;@;iü;iño;:;;[".x-spinner-button-down;<o;=;>" ;i¢;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@
-	;i¢;?[o;F;["x-spinner-button-down;>@
-	;i¢;T;@;6i ;	[o;0;["margin-left;o;-;;G;"
-.25em;@;4;5;@;6i ;	[ ;i£;i¢o;:;;[".x-spinner-button-up;<o;=;>" ;i•;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@ 	;i•;?[o;F;["x-spinner-button-up;>@ 	;i•;T;@;6i ;	[o;0;["margin-right;o;-;;G;"
-.25em;@;4;5;@;6i ;	[ ;i¶;i•o;:;;["&.x-field-grouped-buttons;<o;=;>" ;i©;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@6	;i©;?[o;K;>@6	;i©o;F;["x-field-grouped-buttons;>@6	;i©;T;@;6i ;	[o;:;;[".x-input-el;<o;=;>" ;i™;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@G	;i™;?[o;F;["x-input-el;>@G	;i™;T;@;6i ;	[o;0;["text-align;o;-;;G;"	left;@;4;5;@;6i ;	[ ;i´;i™o;:;;[".x-spinner-button-down;<o;=;>" ;iÆ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@]	;iÆ;?[o;F;["x-spinner-button-down;>@]	;iÆ;T;@;6i ;	[o;0;["margin-right;o;-;;G;"	.5em;@;4;5;@;6i ;	[ ;iØ;iÆ;i©;iqo;:;;[".x-android;<o;=;>" ;i¥;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@s	;i¥;?[o;F;["x-android;>@s	;i¥;T;@;6i ;	[o;:;;[".x-spinner-button;<o;=;>" ;iµ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@É	;iµ;?[o;F;["x-spinner-button;>@É	;iµ;T;@;6i ;	[o;0;["padding;o;1	;2;3;[	o;";#["em;$"
-0.4em;f0.40000000000000002 ôö;@;%[ ;i∂o;";#[ ;$"0;i ;@;%@¿;i∂o;";#["em;$"0.11em;f0.11 \);@;%[ ;i∂o;-	;;G;"!important;@;i∂;@;i∂;4;5;@;6i ;	[ ;i∂;iµ;i¥o;
-;;+;["/* Ext.field.Select */;@;	[ ;i∫o;:;;[".x-select-overlay;<o;=;>" ;iª;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@Æ	;iª;?[o;F;["x-select-overlay;>@Æ	;iª;T;@;6i ;	[o;:;;[".x-list-item-label;<o;=;>" ;iº;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@æ	;iº;?[o;F;["x-list-item-label;>@æ	;iº;T;@;6i ;	[o;0;["height;o;-;;G;"
-2.6em;@;4;5;@;6i ;	[ ;iΩ;iºo;:;;[".x-list-label;<o;=;>" ;i¿;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@‘	;i¿;?[o;F;["x-list-label;>@‘	;i¿;T;@;6i ;	[o;H;"ellipsis;{ ;@;	[ ;0;i¡;[ o;0;["display;o;-;;G;"
-block;@;4;5;@;6i ;	[ ;i¬;i¿o;:;;[".x-item-selected;<o;=;>" ;i≈;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@Ô	;i≈;?[o;F;["x-item-selected;>@Ô	;i≈;T;@;6i ;	[o;:;;[".x-list-label;<o;=;>" ;i∆;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@ˇ	;i∆;?[o;F;["x-list-label;>@ˇ	;i∆;T;@;6i ;	[o;0;["margin-right;o;-;;G;"
-2.6em;@;4;5;@;6i ;	[ ;i«;i∆o;:;;[".x-list-item-inner;<o;=;>" ;i ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@
-;i ;?[o;F;["x-list-item-inner;>@
-;i ;T;@;6i ;	[o;:;;["&:before;<o;=;>" ;iÀ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@%
-;iÀ;?[o;K;>@%
-;iÀo;L
-;["before;;M;>@%
-;N0;iÀ;T;@;6i ;	[o;H;"checkmark;{ ;@;	[ ;0;iÃ;[o;;"	rgba;{ ;@;0;iÃ;[	o;";#[ ;$"0;i ;@;%@¿;iÃo;";#[ ;$"0;i ;@;%@¿;iÃo;";#[ ;$"0;i ;@;%@¿;iÃo;";#[ ;$"0.3;f0.29999999999999999 33;@;%@¿;iÃo;0;["margin-top;o;-;;G;"
--.8em;@;4;5;@;6i ;	[ ;iÕ;iÀo;:;;["&:after;<o;=;>" ;i–;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@R
-;i–;?[o;K;>@R
-;i–o;L
-;["
-after;;M;>@R
-;N0;i–;T;@;6i ;	[o;H;"checkmark;{ ;@;	[ ;0;i—;[o; 	;"form-light;!"form_light;@;i—;i–;i ;i≈;iªu;O⁄[o:Sass::Script::Variable	:
-@name"include-sliders:@underscored_name"include_sliders:@options{ :
-@linei◊0[o:Sass::Tree::MixinNode;"sencha-form-sliders:@keywords{ ;@	:@children[ :@splat0;	iÿ:
-@args[ o;
-;;+;[" /*remove browser styling */;@;	[ ;i€o;:;;["7input[type="search"]::-webkit-search-cancel-button;<o;=;>" ;i‹;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@p
-;i‹;?[o;I	;["
-input;>@p
-;J0;i‹o:Sass::Selector::Attribute;["	type:@flags0;[""search";>@p
-;J0;)"=;i‹o;L
-;["!-webkit-search-cancel-button;;R;>@p
-;N0;i‹;T;@;6i ;	[o;0;["-webkit-appearance;o;-;;G;"	none;@;4;5;@;6i ;	[ ;i›;i‹o;:;;[".x-field-number;<o;=;>" ;i‡;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@è
-;i‡;?[o;F;["x-field-number;>@è
-;i‡;T;@;6i ;	[o;:;;["Kinput::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button;<o;=;>" ;i‚;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@ü
-;i‚;?[o;I	;["
-input;>@ü
-;J0;i‚o;L
-;["-webkit-outer-spin-button;;R;>@ü
-;N0;i‚o;@;?["
-o;A
-;Bo;C;D{ ;E0;>@ü
-;i‚;?[o;I	;["
-input;>@ü
-;J0;i‚o;L
-;["-webkit-inner-spin-button;;R;>@ü
-;N0;i‚;T;@;6i ;	[o;0;["-webkit-appearance;o;-;;G;"	none;@;4;5;@;6i ;	[ ;i„o;0;["margin;o;-;;G;"0;@;4;5;@;6i ;	[ ;i‰;i‚;i‡o;:;;[".x-field-search;<o;=;>" ;iË;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@À
-;iË;?[o;F;["x-field-search;>@À
-;iË;T;@;6i ;	[o;:;;[".x-field-input;<o;=;>" ;iÈ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@€
-;iÈ;?[o;F;["x-field-input;>@€
-;iÈ;T;@;6i ;	[o;0;["position;o;-;;G;"relative;@;4;5;@;6i ;	[ ;iÍo;:;;["&:before;<o;=;>" ;iÏ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@Ò
-;iÏ;?[o;K;>@Ò
-;iÏo;L
-;["before;;M;>@Ò
-;N0;iÏ;T;@;6i ;	[o;H;"insertion;{ ;@;	[ ;0;iÌ;[	o;";#["em;$"0.86em;f0.85999999999999999 ÎÖ;@;%[ ;iÌo;";#["em;$"0.86em;f0.85999999999999999 ÎÖ;@;%[ ;iÌo;";#["%;$"50%;i7;@;%[ ;iÌo;";#["em;$"
-0.5em;f0.5;@;%[ ;iÌo;0;["-webkit-mask-image;o;;"theme_image;{ ;@;0;iÓ;[o;-	;;.;"default;@;iÓo;-	;;.;"pictos/search.png;@;iÓ;4;5;@;6i ;	[ ;iÓo;0;["-webkit-mask-size;o;-;;G;"
-.86em;@;4;5;@;6i ;	[ ;iÔo;0;["background-color;o;-;;G;"	#ccc;@;4;5;@;6i ;	[ ;io;0;["-webkit-mask-repeat;o;-;;G;"no-repeat;@;4;5;@;6i ;	[ ;iÒo;0;["margin-top;o;-;;G;"-0.43em;@;4;5;@;6i ;	[ ;iÚ;iÏo;:;;[".x-form-field;<o;=;>" ;iÙ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@B;iÙ;?[o;F;["x-form-field;>@B;iÙ;T;@;6i ;	[o;0;["margin-left;o;&
-;'o;";#["em;$"0.67em;f0.67000000000000004 =q;@;%[ ;iı;(o; 	;" toolbar-search-left-padding;!" toolbar_search_left_padding;@;iı;@;);*;iı;4;5;@;6i ;	[ ;iı;iÙ;iÈ;iËo;
-;;+;["/*clear icon */;@;	[ ;i˙o;;0;"form-clear-size;o;";#["em;$"
-2.2em;f2.2000000000000002 ôö;@;%[ ;i˚;@;	[ ;i˚o;:;;[".x-field-input;<o;=;>" ;i˝;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@m;i˝;?[o;F;["x-field-input;>@m;i˝;T;@;6i ;	[o;:;;[".x-clear-icon;<o;=;>" ;i˛;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@};i˛;?[o;F;["x-clear-icon;>@};i˛;T;@;6i ;	[o;0;["display;o;-;;G;"	none;@;4;5;@;6i ;	[ ;iˇo;0;["background;o;1	;2;3;[o;;"theme_image;{ ;@;0;i ;[o;-	;;.;"default;@;i o;-	;;.;"clear_icon.png;@;i o;-	;;G;"no-repeat;@;i ;@;i ;4;5;@;6i ;	[ ;i o;0;["background-position;o;1	;2;3;[o;-	;;G;"center;@;io;-	;;G;"center;@;i;@;i;4;5;@;6i ;	[ ;io;0;["background-size;o;1	;2;3;[o;";#["%;$"55%;i<;@;%[ ;io;";#["%;$"55%;i<;@;%[ ;i;@;i;4;5;@;6i ;	[ ;io;0;["
-width;o; 	;"form-clear-size;!"form_clear_size;@;i;4;5;@;6i ;	[ ;io;0;["height;o; 	;"form-clear-size;!"form_clear_size;@;i;4;5;@;6i ;	[ ;io;0;["margin;o;-;;G;"	.5em;@;4;5;@;6i ;	[ ;io;0;["margin-top;o:!Sass::Script::UnaryOperation	;@;);*:@operando;&
-;'o;";#[ ;$"2;i;@;%@¿;i;(o; 	;"form-clear-size;!"form_clear_size;@;i;@;);,;i;i;4;5;@;6i ;	[ ;io;0;["position;o;-;;G;"absolute;@;4;5;@;6i ;	[ ;io;0;["top;o;-;;G;"50%;@;4;5;@;6i ;	[ ;io;0;["
-right;o;-;;G;"
--.5em;@;4;5;@;6i ;	[ ;i	;i˛;i˝o;:;;[".x-field-clearable;<o;=;>" ;i;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@Ô;i;?[o;F;["x-field-clearable;>@Ô;i;T;@;6i ;	[o;:;;[".x-clear-icon;<o;=;>" ;i;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@ˇ;i;?[o;F;["x-clear-icon;>@ˇ;i;T;@;6i ;	[o;0;["display;o;-;;G;"
-block;@;4;5;@;6i ;	[ ;i;io;:;;[".x-field-input;<o;=;>" ;i;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@;i;?[o;F;["x-field-input;>@;i;T;@;6i ;	[o;0;["padding-right;o; 	;"form-clear-size;!"form_clear_size;@;i;4;5;@;6i ;	[ ;i;i;io;:;;[".x-android .x-input-el;<o;=;>" ;i;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@,;i;?[o;F;["x-android;>@,;io;A
-;Bo;C;D{ ;E0;>@,;i;?[o;F;["x-input-el;>@,;i;T;@;6i ;	[o;0;["-webkit-text-fill-color;o;-;;G;"	#000;@;4;5;@;6i ;	[ ;i;io;:;;["$.x-android .x-empty .x-input-el;<o;=;>" ;i;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@I;i;?[o;F;["x-android;>@I;io;A
-;Bo;C;D{ ;E0;>@I;i;?[o;F;["x-empty;>@I;io;A
-;Bo;C;D{ ;E0;>@I;i;?[o;F;["x-input-el;>@I;i;T;@;6i ;	[o;0;["-webkit-text-fill-color;o;-;;G;"#A9A9A9;@;4;5;@;6i ;	[ ;i;io;
-;;+;["/*disabled fields */;@;	[ ;io;:;;["Ê.x-item-disabled .x-form-label span,
-  .x-item-disabled input,
-  .x-item-disabled .x-input-el,
-  .x-item-disabled .x-spinner-body,
-  .x-item-disabled select,
-  .x-item-disabled textarea,
-  .x-item-disabled .x-field-clear-container;<o;=;>" ;i&;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;F;["x-item-disabled;>@q;i&o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;F;["x-form-label;>@q;i&o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;I	;["	span;>@q;J0;i&o;@;?["
-o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;F;["x-item-disabled;>@q;i&o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;I	;["
-input;>@q;J0;i&o;@;?["
-o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;F;["x-item-disabled;>@q;i&o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;F;["x-input-el;>@q;i&o;@;?["
-o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;F;["x-item-disabled;>@q;i&o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;F;["x-spinner-body;>@q;i&o;@;?["
-o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;F;["x-item-disabled;>@q;i&o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;I	;["select;>@q;J0;i&o;@;?["
-o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;F;["x-item-disabled;>@q;i&o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;I	;["textarea;>@q;J0;i&o;@;?["
-o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;F;["x-item-disabled;>@q;i&o;A
-;Bo;C;D{ ;E0;>@q;i&;?[o;F;["x-field-clear-container;>@q;i&;T;@;6i ;	[o;0;["
-color;o;;"lighten;{ ;@;0;i';[o; 	;"form-dark;!"form_dark;@;i'o;";#["%;$"50%;i7;@;%[ ;i';4;5;@;6i ;	[ ;i'o;0;["-webkit-text-fill-color;o;;"lighten;{ ;@;0;i(;[o; 	;"form-dark;!"form_dark;@;i(o;";#["%;$"50%;i7;@;%[ ;i(;4;5;@;6i ;	[ ;i(o;0;["pointer-events;o;-;;G;"	none;@;4;5;@;6i ;	[ ;i);i&o;
-;;+;["/* Ext.form.FieldSet */;@;	[ ;i,o;:;;[".x-form-fieldset;<o;=;>" ;i-;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@;i-;?[o;F;["x-form-fieldset;>@;i-;T;@;6i ;	[
-o;0;["margin;o;1	;2;3;[o;";#[ ;$"0;i ;@;%@¿;i.o;";#[ ;$"0;i ;@;%@¿;i.o;";#["em;$"
-1.5em;f1.5;@;%[ ;i.;@;i.;4;5;@;6i ;	[ ;i.o;:;;[".x-form-label;<o;=;>" ;i0;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@A;i0;?[o;F;["x-form-label;>@A;i0;T;@;6i ;	[o;0;["border-top;o;1	;2;3;[o;";#["px;$"1px;i;@;%[ ;i1o;-	;;G;"
-solid;@;i1o;;"lighten;{ ;@;0;i1;[o; 	;"form-light;!"form_light;@;i1o;";#["%;$"20%;i;@;%[ ;i1;@;i1;4;5;@;6i ;	[ ;i1;i0o;:;;[".x-form-fieldset-inner;<o;=;>" ;i4;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@j;i4;?[o;F;["x-form-fieldset-inner;>@j;i4;T;@;6i ;	[
-o;0;["border;o;1	;2;3;[o;";#["px;$"1px;i;@;%[ ;i5o;-	;;G;"
-solid;@;i5o; 	;"form-light;!"form_light;@;i5;@;i5;4;5;@;6i ;	[ ;i5o;0;["background;o;-;;G;"	#fff;@;4;5;@;6i ;	[ ;i6o;0;["padding;o;-;;G;"0;@;4;5;@;6i ;	[ ;i7u;O[o:Sass::Script::Variable	:
-@name"include-border-radius:@underscored_name"include_border_radius:@options{ :
-@linei80[o:Sass::Tree::MixinNode;"border-radius:@keywords{ ;@	:@children[ :@splat0;	i8:
-@args[o; 	;"form-fieldset-radius;"form_fieldset_radius;@	;	i8o;0;["overflow;o;-;;G;"hidden;@;4;5;@;6i ;	[ ;i9;i4o;
-;;+;["/*Ext.field.Field */;@;	[ ;i<o;:;;[".x-field;<o;=;>" ;i=;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@°;i=;?[o;F;["x-field;>@°;i=;T;@;6i ;	[	o;0;["border-bottom;o;1	;2;3;[o;";#["px;$"1px;i;@;%[ ;i>o;-	;;G;"
-solid;@;i>o; 	;"form-light;!"form_light;@;i>;@;i>;4;5;@;6i ;	[ ;i>o;0;["background;o;-;;G;"transparent;@;4;5;@;6i ;	[ ;i?o;:;;["&:first-child;<o;=;>" ;iA;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@«;iA;?[o;K;>@«;iAo;L
-;["first-child;;M;>@«;N0;iA;T;@;6i ;	[u;O"[o:Sass::Script::Variable	:
-@name"include-border-radius:@underscored_name"include_border_radius:@options{ :
-@lineiB0[o:Sass::Tree::MixinNode;"border-top-radius:@keywords{ ;@	:@children[ :@splat0;	iC:
-@args[o; 	;"form-fieldset-radius;"form_fieldset_radius;@	;	iC;iAo;:;;["&:last-child;<o;=;>" ;iG;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@Ÿ;iG;?[o;K;>@Ÿ;iGo;L
-;["last-child;;M;>@Ÿ;N0;iG;T;@;6i ;	[o;0;["border-bottom;o;-;;G;"0;@;4;5;@;6i ;	[ ;iHu;O%[o:Sass::Script::Variable	:
-@name"include-border-radius:@underscored_name"include_border_radius:@options{ :
-@lineiJ0[o:Sass::Tree::MixinNode;"border-bottom-radius:@keywords{ ;@	:@children[ :@splat0;	iK:
-@args[o; 	;"form-fieldset-radius;"form_fieldset_radius;@	;	iK;iG;i=;i-o;:;;[".x-form-fieldset-title;<o;=;>" ;iQ;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@Ò;iQ;?[o;F;["x-form-fieldset-title;>@Ò;iQ;T;@;6i ;	[
-o;H;"
-label;{ ;@;	[ ;0;iR;[ o;0;["margin;o;1	;2;3;[o;";#["em;$"1em;i;@;%[ ;iSo;&
-;'o;";#["em;$"
-0.1em;f0.10000000000000001 ôö;@;%[ ;iS;(o; 	;"form-spacing;!"form_spacing;@;iS;@;);P;iSo;";#["em;$"
-0.3em;f0.29999999999999999 33;@;%[ ;iS;@;iS;4;5;@;6i ;	[ ;iSo;0;["
-color;o; 	;"form-dark;!"form_dark;@;iT;4;5;@;6i ;	[ ;iTo;0;["font-weight;o;-;;G;"	bold;@;4;5;@;6i ;	[ ;iUo;:;;[".x-innerhtml;<o;=;>" ;iW;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@.;iW;?[o;F;["x-innerhtml;>@.;iW;T;@;6i ;	[o;H;"ellipsis;{ ;@;	[ ;0;iX;[ ;iW;iQo;:;;["".x-form-fieldset-instructions;<o;=;>" ;i\;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@C;i\;?[o;F;["!x-form-fieldset-instructions;>@C;i\;T;@;6i ;	[
-o;H;"
-label;{ ;@;	[ ;0;i];[ o;0;["
-color;o;;"lighten;{ ;@;0;i^;[o; 	;"form-dark;!"form_dark;@;i^o;";#["%;$"30%;i#;@;%[ ;i^;4;5;@;6i ;	[ ;i^o;0;["margin;o;1	;2;3;[o;";#["em;$"1em;i;@;%[ ;i_o;&
-;'o;";#["em;$"
-0.1em;f0.10000000000000001 ôö;@;%[ ;i_;(o; 	;"form-spacing;!"form_spacing;@;i_;@;);P;i_o;";#["em;$"
-0.3em;f0.29999999999999999 33;@;%[ ;i_;@;i_;4;5;@;6i ;	[ ;i_o;0;["font-size;o;-;;G;"	.8em;@;4;5;@;6i ;	[ ;i`o;0;["text-align;o;-;;G;"center;@;4;5;@;6i ;	[ ;ia;i\o;
-;;+;["/* Ext.field.Select */;@;	[ ;ido;:;;[".x-selectmark-base;<o;=;>" ;ie;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@ì;ie;?[o;F;["x-selectmark-base;>@ì;ie;T;@;6i ;	[
-o;H;"insertion;{ ;@;	[ ;0;if;[	o;";#["em;$"1em;i;@;%[ ;ifo;";#["em;$"1em;i;@;%[ ;ifo;";#["%;$"50%;i7;@;%[ ;ifo;-	;;G;"	auto;@;ifo;0;["
-right;o;&
-;'o;";#["em;$"
-0.1em;f0.10000000000000001 ôö;@;%[ ;ig;(o; 	;"form-spacing;!"form_spacing;@;ig;@;);P;ig;4;5;@;6i ;	[ ;igo;0;["-webkit-mask-size;o;-;;G;"1em;@;4;5;@;6i ;	[ ;iho;0;["-webkit-mask-image;o;;"theme_image;{ ;@;0;ii;[o;-	;;.;"default;@;iio;-	;;.;"pictos/arrow_down.png;@;ii;4;5;@;6i ;	[ ;iio;0;["margin-top;o;-;;G;"
--.5em;@;4;5;@;6i ;	[ ;ij;ieo;
-;;+;["9/* Create the dropdown arrow
- * for select fields */;@;	[ ;imo;:;;[".x-field-select;<o;=;>" ;io;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@„;io;?[o;F;["x-field-select;>@„;io;T;@;6i ;	[o;0;["position;o;-;;G;"relative;@;4;5;@;6i ;	[ ;ipo;0;["z-index;o;-;;G;"1;@;4;5;@;6i ;	[ ;iqo;:;;[".x-component-outer;<o;=;>" ;is;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@ˇ;is;?[o;F;["x-component-outer;>@ˇ;is;T;@;6i ;	[o;:;;["&:after;<o;=;>" ;it;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@;it;?[o;K;>@;ito;L
-;["
-after;;M;>@;N0;it;T;@;6i ;	[o;H;"selectmark;{ ;@;	[ ;0;iu;[o; 	;"form-light;!"form_light;@;iu;ito;:;;["&:before,
-      &:after;<o;=;>" ;iy;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@(;iy;?[o;K;>@(;iyo;L
-;["before;;M;>@(;N0;iyo;@;?["
-o;A
-;Bo;C;D{ ;E0;>@(;iy;?[o;K;>@(;iyo;L
-;["
-after;;M;>@(;N0;iy;T;@;6i ;	[o;0;["pointer-events;o;-;;G;"	none;@;4;5;@;6i ;	[ ;izo;0;["position;o;-;;G;"absolute;@;4;5;@;6i ;	[ ;i{o;0;["display;o;-;;G;"
-block;@;4;5;@;6i ;	[ ;i|;iyo;:;;["&:before;<o;=;>" ;i;?[o;@;?[o;A
-;Bo;C;D{ ;E0;>@V;i;?[o;K;>@V;io;L
-;["before;;M;>@V;N0;i;T;@;6i ;	[
-o;H;"insertion;{ ;@;	[ ;0;iÄ;[	o;";#["em;$"4em;i	;@;%[ ;iÄo;-	;;G;"	auto;@;iÄo;";#[ ;$"0;i ;@;%@¿;iÄo;-	;;G;"	auto;@;iÄo;0;["
-right;o;-;;G;"0;@;4;5;@;6i ;	[ ;iÅo;0;["bottom;o;-;;G;"0;@;4;5;@;6i ;	[ ;iÇu;O$[o:Sass::Script::Variable	:
-@name"include-border-radius:@underscored_name"include_border_radius:@options{ :
-@lineiÉ0[o:Sass::Tree::MixinNode;"border-right-radius:@keywords{ ;@	:@children[ :@splat0;	iÉ:
-@args[o; 	;"form-fieldset-radius;"form_fieldset_radius;@	;	iÉu;O[o:Sass::Script::Variable	:
-@name"include-highlights:@underscored_name"include_highlights:@options{ :
-@lineiÑ0[o:Sass::Tree::PropNode;["background:@valueo:Sass::Script::Funcall;"-webkit-gradient:@keywords{ ;@	:@splat0;	iÑ:
-@args[
-o:Sass::Script::String	:
-@type:identifier;"linear;@	;	iÑo:Sass::Script::List	:@separator:
-space;[o:Sass::Script::Number:@numerator_units["%:@original"0%;i ;@	:@denominator_units[ ;	iÑo;;["%;"0%;i ;@	;[ ;	iÑ;@	;	iÑo;	;;;[o;;["%;"	100%;ii;@	;[ ;	iÑo;;["%;"0%;i ;@	;[ ;	iÑ;@	;	iÑo;;"	from;{ ;@	;0;	iÑ;[o;;"	rgba;{ ;@	;0;	iÑ;[o; 	;"form-field-bg-color;"form_field_bg_color;@	;	iÑo;;[ ;"0;i ;@	;[ ;	iÑo;;"color-stop;{ ;@	;0;	iÑ;[o;;[ ;"0.5;f0.5;@	;@:;	iÑo;;"	rgba;{ ;@	;0;	iÑ;[o; 	;"form-field-bg-color;"form_field_bg_color;@	;	iÑo;;[ ;"1;i;@	;@:;	iÑ:@prop_syntax:new;@	:
-@tabsi :@children[ ;	iÑ;i;is;io;0;i|;[[o; ;"include-sliders;!"include_sliders;@o; 	;"include-form-sliders;!"include_form_sliders;@;i|;i
