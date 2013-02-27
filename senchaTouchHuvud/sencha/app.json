@@ -40,7 +40,7 @@
      */
     "js": [
     	{
-            "path": "cordova-2.3.0.js",
+            "path": "cordova-2.2.0.js",
             "x-bootstrap": true
         },
         {
